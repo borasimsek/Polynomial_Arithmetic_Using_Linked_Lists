@@ -49,7 +49,7 @@ public class Calculator {
         } else if (term1.exponentZ < term2.exponentZ) {
             return false;
         } else {
-            return false; // Eşitse de term1 büyük değildir.
+            return false;
         }
     }
 }
