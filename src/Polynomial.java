@@ -1,5 +1,5 @@
 public class Polynomial {
-    private Term head;
+    public Term head;
 
     public Polynomial() {
         this.head = null;
@@ -16,32 +16,6 @@ public class Polynomial {
             current.next = newTerm;
         }
     }
-
-    private static int parseCoefficient(String termStr) {
-        // İlk karakter artı (+) veya eksi (-) işareti mi kontrol ediyoruz
-        boolean negative = false;
-        int startIndex = 0;
-        if (termStr.charAt(0) == '-') {
-            negative = true;
-            startIndex = 1;
-        } else if (termStr.charAt(0) == '+') {
-            startIndex = 1;
-        }
-
-        // Başlangıç indeksinden itibaren katsayıyı alma
-        int coefficient = 0;
-        for (int i = startIndex; i < termStr.length(); i++) {
-            char c = termStr.charAt(i);
-            if (Character.isDigit(c)) {
-                coefficient = coefficient * 10 + (c - '0');
-            } else {
-                break;
-            }
-        }
-
-        return negative ? -coefficient : coefficient;
-    }
-
     public static Polynomial processPolynomials(char operator, String poly1, String poly2) {
         Polynomial result = new Polynomial();
         System.out.println("Operator: " + operator);
@@ -55,7 +29,7 @@ public class Polynomial {
         switch (operator) {
             case '+':
                 System.out.println("Adding method will be done");
-                result = polynomialAddition(poly_real1,poly_real2);
+                result = Calculator.polynomialAddition(poly_real1,poly_real2);
                 displayPolynomial(result);
                 break;
             case '-':
@@ -72,60 +46,6 @@ public class Polynomial {
 
         return result;
     }
-
-    private static Polynomial polynomialAddition(Polynomial polyReal1, Polynomial polyReal2) {
-        Polynomial result = new Polynomial();
-
-        Term current1 = polyReal1.head;
-        Term current2 = polyReal2.head;
-
-        while (current1 != null && current2 != null) {
-            if (current1.exponentX == current2.exponentX && current1.exponentY == current2.exponentY && current1.exponentZ == current2.exponentZ) {
-                int sumCoefficient = current1.coefficient + current2.coefficient;
-                if (sumCoefficient != 0) {
-                    result.addTerm(new Term(sumCoefficient, current1.exponentX, current1.exponentY, current1.exponentZ));
-                }
-                current1 = current1.next;
-                current2 = current2.next;
-            } else if (isTerm1Greater(current1, current2)) {
-                result.addTerm(new Term(current1.coefficient, current1.exponentX, current1.exponentY, current1.exponentZ));
-                current1 = current1.next;
-            } else {
-                result.addTerm(new Term(current2.coefficient, current2.exponentX, current2.exponentY, current2.exponentZ));
-                current2 = current2.next;
-            }
-        }
-
-        while (current1 != null) {
-            result.addTerm(new Term(current1.coefficient, current1.exponentX, current1.exponentY, current1.exponentZ));
-            current1 = current1.next;
-        }
-
-        while (current2 != null) {
-            result.addTerm(new Term(current2.coefficient, current2.exponentX, current2.exponentY, current2.exponentZ));
-            current2 = current2.next;
-        }
-
-        return result;
-    }
-    private static boolean isTerm1Greater(Term term1, Term term2) {
-        if (term1.exponentX > term2.exponentX) {
-            return true;
-        } else if (term1.exponentX < term2.exponentX) {
-            return false;
-        } else if (term1.exponentY > term2.exponentY) {
-            return true;
-        } else if (term1.exponentY < term2.exponentY) {
-            return false;
-        } else if (term1.exponentZ > term2.exponentZ) {
-            return true;
-        } else if (term1.exponentZ < term2.exponentZ) {
-            return false;
-        } else {
-            return false; // Eşitse de term1 büyük değildir.
-        }
-    }
-
 
     private static Polynomial strToLinkedList(String poly) {
         Polynomial polynomial = new Polynomial();
@@ -155,32 +75,87 @@ public class Polynomial {
         // Eğer x varsa, onun üssünü alalım
         if (indexOfX != -1) {
             int exponentIndex = indexOfX + 1; // 'x' karakterinden sonraki ilk karakterin indexi
-            while (exponentIndex < termStr.length() && Character.isDigit(termStr.charAt(exponentIndex))) {
-                exponentX = exponentX * 10 + (termStr.charAt(exponentIndex) - '0');
-                exponentIndex++;
+            if (exponentIndex < termStr.length() && Character.isDigit(termStr.charAt(exponentIndex))) {
+                // Eğer 'x' karakterinden sonra bir sayı varsa, üs değeri o sayıya eşittir
+                while (exponentIndex < termStr.length() && Character.isDigit(termStr.charAt(exponentIndex))) {
+                    exponentX = exponentX * 10 + (termStr.charAt(exponentIndex) - '0');
+                    exponentIndex++;
+                }
+            } else {
+                // Eğer 'x' karakterinden sonra bir sayı yoksa, üs değeri 1 olarak kabul edilir
+                exponentX = 1;
             }
+        } else {
+            exponentX = 0; // Eğer 'x' bulunmuyorsa, üs 0 olmalı
         }
-
         // Eğer y varsa, onun üssünü alalım
         if (indexOfY != -1) {
             int exponentIndex = indexOfY + 1; // 'y' karakterinden sonraki ilk karakterin indexi
-            while (exponentIndex < termStr.length() && Character.isDigit(termStr.charAt(exponentIndex))) {
-                exponentY = exponentY * 10 + (termStr.charAt(exponentIndex) - '0');
-                exponentIndex++;
+            if (exponentIndex < termStr.length() && Character.isDigit(termStr.charAt(exponentIndex))) {
+                // Eğer 'y' karakterinden sonra bir sayı varsa, üs değeri o sayıya eşittir
+                while (exponentIndex < termStr.length() && Character.isDigit(termStr.charAt(exponentIndex))) {
+                    exponentY = exponentY * 10 + (termStr.charAt(exponentIndex) - '0');
+                    exponentIndex++;
+                }
+            } else {
+                // Eğer 'y' karakterinden sonra bir sayı yoksa, üs değeri 1 olarak kabul edilir
+                exponentY = 1;
             }
+        } else {
+            exponentY = 0; // Eğer 'y' bulunmuyorsa, üs 0 olmalı
         }
 
+        // Eğer z varsa, onun üssünü alalım
         if (indexOfZ != -1) {
             int exponentIndex = indexOfZ + 1; // 'z' karakterinden sonraki ilk karakterin indexi
-            while (exponentIndex < termStr.length() && Character.isDigit(termStr.charAt(exponentIndex))) {
-                exponentZ = exponentZ * 10 + (termStr.charAt(exponentIndex) - '0');
-                exponentIndex++;
+            if (exponentIndex < termStr.length() && Character.isDigit(termStr.charAt(exponentIndex))) {
+                // Eğer 'z' karakterinden sonra bir sayı varsa, üs değeri o sayıya eşittir
+                while (exponentIndex < termStr.length() && Character.isDigit(termStr.charAt(exponentIndex))) {
+                    exponentZ = exponentZ * 10 + (termStr.charAt(exponentIndex) - '0');
+                    exponentIndex++;
+                }
+            } else {
+                // Eğer 'z' karakterinden sonra bir sayı yoksa, üs değeri 1 olarak kabul edilir
+                exponentZ = 1;
             }
+        } else {
+            exponentZ = 0; // Eğer 'z' bulunmuyorsa, üs 0 olmalı
         }
+
 
         return new Term(coefficient, exponentX, exponentY, exponentZ);
     }
+    private static int parseCoefficient(String termStr) {
+        // İlk karakter artı (+) veya eksi (-) işareti mi kontrol ediyoruz
+        boolean negative = false;
+        int startIndex = 0;
+        if (termStr.charAt(0) == '-') {
+            negative = true;
+            startIndex = 1;
+        } else if (termStr.charAt(0) == '+') {
+            startIndex = 1;
+        }
 
+        // Başlangıç indeksinden itibaren katsayıyı alma
+        int coefficient = 0;
+        boolean hasCoefficient = false; // Katsayının varlığını belirtmek için bir bayrak
+        for (int i = startIndex; i < termStr.length(); i++) {
+            char c = termStr.charAt(i);
+            if (Character.isDigit(c)) {
+                coefficient = coefficient * 10 + (c - '0');
+                hasCoefficient = true; // En az bir basamak varsa katsayı olduğunu belirtir
+            } else {
+                break;
+            }
+        }
+
+        // Katsayı olmadığına dair bir işaret yoksa ve döngüden geçmediyse, katsayı 1 kabul edilir
+        if (!hasCoefficient) {
+            coefficient = 1;
+        }
+
+        return negative ? -coefficient : coefficient;
+    }
     private static void displayPolynomial(Polynomial polynomial) {
         Term current = polynomial.head;
         while (current != null) {
