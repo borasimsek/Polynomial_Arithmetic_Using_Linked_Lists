@@ -17,9 +17,7 @@ public class Main {
                 char operator = scanner.next().charAt(0);
                 String polynomial1 = scanner.next();
                 String polynomial2 = scanner.next();
-
                 Polynomial result = Polynomial.processPolynomials(operator, polynomial1, polynomial2);
-
                 outputResult(outputFile, result); // Write the result to output.txt
             }
 
