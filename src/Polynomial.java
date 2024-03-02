@@ -34,6 +34,9 @@ public class Polynomial {
                 break;
             case '-':
                 System.out.println("Subtracting method will be done");
+                result = Calculator.polynomialSubtraction(poly_real1,poly_real2);
+                displayPolynomial(result);
+
                 break;
             case '*':
                 System.out.println("Multiplication method will be done");

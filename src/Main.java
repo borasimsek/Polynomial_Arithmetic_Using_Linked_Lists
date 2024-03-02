@@ -38,8 +38,6 @@ public class Main {
             current = current.next;
         }
 
-        // Dosyayı kapat
-        outputFile.close();
     }
 
     public static void outputResult_v2(FileWriter outputFile, Polynomial result) throws IOException {
@@ -70,6 +68,6 @@ public class Main {
             outputFile.write(termStringBuilder.toString());
             current = current.next;
         }
-        outputFile.close();
+        outputFile.write("\n");
     }
 }
