@@ -8,8 +8,13 @@ public class Calculator {
      */
     static Polynomial addTwoPoly(Polynomial polyReal1, Polynomial polyReal2) {
         /*
-          Takes two polynomial as an input and add them up by comparing their exponents. If all of them matches,
-          coef. of the term will be added. It will analyze term by term.
+          @param polyReal1 : first polynomial
+         *                  polyReal2 : second polynomial
+         *                  This method adds two polynomials.
+         *                  It will analyze term by term and add them to the result polynomial.
+         *                  If the exponents are equal, it will add the coefficients.
+         *                  If the exponents are not equal, it will add the term with greater exponent to the result polynomial.
+         *                  It will return the result polynomial.
          */
         Polynomial result = new Polynomial();
         Term current1 = polyReal1.getHead();
@@ -46,8 +51,13 @@ public class Calculator {
 
     static  Polynomial subtractTwoPoly(Polynomial polyReal1 , Polynomial polyReal2){
         /*
-            It is similar to addition of two polynomials. Only difference is we use - sign for current2.coef. part.
-         */
+          @param polyReal1 : first polynomial
+         *                  polyReal2 : second polynomial
+         *                  This method subtracts two polynomials.
+         *                  It will analyze term by term and subtract them to the result polynomial.
+         *                  If the exponents are equal, it will subtract the coefficients.
+         *                  If the exponents are not equal, it will add the term with greater exponent to the result polynomial.
+         *                  It will return the result polynomial.         */
         Polynomial result = new Polynomial();
         Term current1, current2;
 
@@ -81,6 +91,13 @@ public class Calculator {
         return result;
     }
     static Polynomial multiplyTwoPoly(Polynomial polyReal1 , Polynomial polyReal2){
+        /*
+          @param polyReal1 : first polynomial
+         *                  polyReal2 : second polynomial
+         *                  This method multiplies two polynomials.
+         *                  It will analyze term by term and multiply them to the result polynomial.
+         *                  It will return the result polynomial.
+         */
         Polynomial result = new Polynomial();
         Term current1 = polyReal1.getHead();
         Term current2 = polyReal2.getHead();
@@ -105,6 +122,12 @@ public class Calculator {
         return simplified_result;
     }
     static Polynomial pretty_poly(Polynomial result){
+        /*
+          @param result : result polynomial
+         *                  This method simplifies the result polynomial.
+         *                  It will analyze term by term and simplify them to the result polynomial.
+         *                  It will return the result polynomial.
+         */
         Polynomial simplified_result = new Polynomial();
         Term current = result.getHead();
 
@@ -128,6 +151,9 @@ public class Calculator {
         return simplified_result;
     }
     static boolean isCoefEqual(Term term1, Term term2) {
+        /*
+          The aim of this method is to compare two terms' coefficients.
+         */
         return term1.exponentX == term2.exponentX && term1.exponentY == term2.exponentY && term1.exponentZ == term2.exponentZ;
     }
     static boolean isTerm1Greater(Term term1, Term term2) {

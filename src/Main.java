@@ -27,6 +27,22 @@ public class Main {
     }
 
     public static void outputResult(FileWriter outputFile, Polynomial result) throws IOException {
+        /**
+         *
+            * @param outputFile : output file
+         *                   result : result of the operation
+         *                      This method writes the result of the operation to the output file.
+         *                      It will analyze term by term and write them to the file.
+         *                      If the coefficient is negative, it will write - sign.
+         *                      If the coefficient is positive, it will write + sign.
+         *                      If the coefficient is 0, it will not write anything.
+         *                      If the exponent is greater than 1, it will write exponent.
+         *                      If the exponent is 0, it will not write x,y or z.
+         *                      If the exponent is 1, it will not write exponent.
+         *                      If the exponent is greater than 1, it will write exponent.
+         *                      It will write the result to the file.
+         *
+         */
         Term current = result.getHead();
         boolean firstTerm = true;
         while (current != null) {
