@@ -5,6 +5,7 @@ public class Calculator {
         week2 : Addition operator
         week3 : Subtraction operator
         week4 : Multiplication operator
+
      */
     static Polynomial addTwoPoly(Polynomial polyReal1, Polynomial polyReal2) {
         /*
@@ -101,7 +102,7 @@ public class Calculator {
         Polynomial result = new Polynomial();
         Term current1 = polyReal1.getHead();
         Term current2 = polyReal2.getHead();
-        Polynomial simplified_result = new Polynomial();
+        Polynomial simplified_result;
 
 
         while (current1 != null){

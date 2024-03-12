@@ -27,9 +27,9 @@ public class Main {
     }
 
     public static void outputResult(FileWriter outputFile, Polynomial result) throws IOException {
-        /**
-         *
-            * @param outputFile : output file
+        /*
+
+             @param outputFile : output file
          *                   result : result of the operation
          *                      This method writes the result of the operation to the output file.
          *                      It will analyze term by term and write them to the file.
@@ -41,7 +41,7 @@ public class Main {
          *                      If the exponent is 1, it will not write exponent.
          *                      If the exponent is greater than 1, it will write exponent.
          *                      It will write the result to the file.
-         *
+
          */
         Term current = result.getHead();
         boolean firstTerm = true;
